@@ -19,18 +19,26 @@ const io = socketio(server,{
         methods: ["GET","POST"],
         credential: true
     }
-})
+});
  
 io.on("connection",(socket) => {
     console.log("user connected")
     console.log(socket.id)
+    socket.emit("message","User is online")
+    socket.on('disconnect',() => {
+        console.log("User disconnect" , socket.id)
+    })
+    socket.on("message",(data)=>{
+        console.log(data)
+    })
 })
+
 
 app.get('/', function (req, res) {
     res.send("working");
 });
 server.listen(3000,function(req,res){
-    console.log("connected")
-})
-// Start the server using server.listen
+    console.log("Server is running")
+});
+
  
