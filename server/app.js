@@ -22,14 +22,12 @@ const io = socketio(server,{
 });
  
 io.on("connection",(socket) => {
-    console.log("user connected")
+    console.log("user connected in backend")
     console.log(socket.id)
-    socket.emit("message","User is online")
-    socket.on('disconnect',() => {
-        console.log("User disconnect" , socket.id)
-    })
+    socket.emit("message " + socket.id)
     socket.on("message",(data)=>{
-        console.log(data)
+        // console.log(data)
+        io.emit('recieve-message', data)
     })
 })
 
